@@ -1,2 +1,4 @@
-# ppk2-net
+# PPKII.NET
 Power Profiler Kit II .NET Application and Library
+
+
