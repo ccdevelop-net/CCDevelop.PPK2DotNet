@@ -1,8 +1,6 @@
 ﻿using System;
 
-namespace PpkII.NET
-{
-    public class Class1
-    {
-    }
+namespace PpkII.NET {
+  public class Class1 {
+  }
 }
