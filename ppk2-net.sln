@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PpkII.NET", "PpkII.NET\PpkII.NET.csproj", "{F90B9023-5BCB-4190-BCA9-0405762538C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{2AC237FD-16EF-498A-B1DD-B5C138F0BE5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PpkII-CLI", "PpkII\PpkII-CLI\PpkII-CLI.csproj", "{5EA8C5A6-24D3-4AC6-84E7-A99B45F7ADE5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{855C5EF6-E5ED-4329-BE5E-8AF5F5C5E777}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PpkII-GUI", "PpkII\PpkII-GUI\PpkII-GUI.csproj", "{11ECB43D-F86B-4438-8AD4-DFA73EAD8E00}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F90B9023-5BCB-4190-BCA9-0405762538C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F90B9023-5BCB-4190-BCA9-0405762538C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F90B9023-5BCB-4190-BCA9-0405762538C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F90B9023-5BCB-4190-BCA9-0405762538C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EA8C5A6-24D3-4AC6-84E7-A99B45F7ADE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EA8C5A6-24D3-4AC6-84E7-A99B45F7ADE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EA8C5A6-24D3-4AC6-84E7-A99B45F7ADE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EA8C5A6-24D3-4AC6-84E7-A99B45F7ADE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11ECB43D-F86B-4438-8AD4-DFA73EAD8E00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11ECB43D-F86B-4438-8AD4-DFA73EAD8E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11ECB43D-F86B-4438-8AD4-DFA73EAD8E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11ECB43D-F86B-4438-8AD4-DFA73EAD8E00}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F90B9023-5BCB-4190-BCA9-0405762538C6} = {2AC237FD-16EF-498A-B1DD-B5C138F0BE5F}
+		{5EA8C5A6-24D3-4AC6-84E7-A99B45F7ADE5} = {855C5EF6-E5ED-4329-BE5E-8AF5F5C5E777}
+		{11ECB43D-F86B-4438-8AD4-DFA73EAD8E00} = {855C5EF6-E5ED-4329-BE5E-8AF5F5C5E777}
+	EndGlobalSection
+EndGlobal
