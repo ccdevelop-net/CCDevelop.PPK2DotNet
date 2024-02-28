@@ -50,7 +50,6 @@ int main(void) {
       // Toggle LED
       HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
     }
-
   }
 }
 //------------------------------------------------------------------------------
