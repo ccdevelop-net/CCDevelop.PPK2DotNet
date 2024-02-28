@@ -30,6 +30,8 @@ UART_HandleTypeDef   huart2;
 
 //------------------------------------------------------------------------------
 int main(void) {
+  static uint32_t   countTime = 0;
+
   // Reset of all peripherals, Initializes the Flash interface and the Systick.
   HAL_Init();
 
@@ -42,6 +44,12 @@ int main(void) {
 
   // Infinite loop
   while (1) {
+    if (countTime < HAL_GetTick()) {
+      countTime = HAL_GetTick() + 1000;   // Set 1 second
+
+      // Toggle LED
+      HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+    }
 
   }
 }
