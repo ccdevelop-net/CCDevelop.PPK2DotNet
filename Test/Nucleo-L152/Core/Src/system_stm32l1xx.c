@@ -1,171 +1,113 @@
 /**
-  ******************************************************************************
-  * @file    system_stm32l1xx.c
-  * @author  MCD Application Team
-  * @brief   CMSIS Cortex-M3 Device Peripheral Access Layer System Source File.
-  *             
-  *   This file provides two functions and one global variable to be called from 
-  *   user application:
-  *      - SystemInit(): This function is called at startup just after reset and 
-  *                      before branch to main program. This call is made inside
-  *                      the "startup_stm32l1xx.s" file.
-  *                        
-  *      - SystemCoreClock variable: Contains the core clock (HCLK), it can be used
-  *                                  by the user application to setup the SysTick 
-  *                                  timer or configure other parameters.
-  *                                     
-  *      - SystemCoreClockUpdate(): Updates the variable SystemCoreClock and must
-  *                                 be called whenever the core clock is changed
-  *                                 during program execution.   
-  *      
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2017-2021 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
-
-/** @addtogroup CMSIS
-  * @{
-  */
-
-/** @addtogroup stm32l1xx_system
-  * @{
-  */  
-  
-/** @addtogroup STM32L1xx_System_Private_Includes
-  * @{
-  */
-
+ *******************************************************************************
+ * @file    system_stm32l1xx.c
+ * @author  MCD Application Team
+ * @brief   CMSIS Cortex-M3 Device Peripheral Access Layer System Source File.
+ *
+ *   This file provides two functions and one global variable to be called from
+ *   user application:
+ *      - SystemInit(): This function is called at startup just after reset and
+ *                      before branch to main program. This call is made inside
+ *                      the "startup_stm32l1xx.s" file.
+ *
+ *      - SystemCoreClock variable: Contains the core clock (HCLK), it can be used
+ *                                  by the user application to setup the SysTick
+ *                                  timer or configure other parameters.
+ *
+ *      - SystemCoreClockUpdate(): Updates the variable SystemCoreClock and must
+ *                                 be called whenever the core clock is changed
+ *                                 during program execution.
+ *
+ *******************************************************************************
+ * This file is part of the PPKII software (https://github.com/cristianc1972/ppk2-net).
+ * Copyright (c) 2024 Cristian Croci.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *******************************************************************************
+ */
 #include "stm32l1xx.h"
 
-/**
-  * @}
-  */
-
-/** @addtogroup STM32L1xx_System_Private_TypesDefinitions
-  * @{
-  */
-
-/**
-  * @}
-  */
-
-/** @addtogroup STM32L1xx_System_Private_Defines
-  * @{
-  */
-#if !defined  (HSE_VALUE) 
-  #define HSE_VALUE    ((uint32_t)8000000U) /*!< Default value of the External oscillator in Hz.
+#if !defined (HSE_VALUE)
+#define HSE_VALUE    ((uint32_t)8000000U) /*!< Default value of the External oscillator in Hz.
                                                 This value can be provided and adapted by the user application. */
 #endif /* HSE_VALUE */
 
-#if !defined  (HSI_VALUE)
-  #define HSI_VALUE    ((uint32_t)16000000U) /*!< Default value of the Internal oscillator in Hz.
-                                                This value can be provided and adapted by the user application. */
+#if !defined (HSI_VALUE)
+#define HSI_VALUE    ((uint32_t)16000000U) /*!< Default value of the Internal oscillator in Hz.
+                                              This value can be provided and adapted by the user application. */
 #endif /* HSI_VALUE */
 
-/*!< Uncomment the following line if you need to use external SRAM mounted
-     on STM32L152D_EVAL board as data memory  */
-/* #define DATA_IN_ExtSRAM */
+// !< Uncomment the following line if you need to use external SRAM mounted
+//    on STM32L152D_EVAL board as data memory
+// #define DATA_IN_ExtSRAM
   
-/* Note: Following vector table addresses must be defined in line with linker
-         configuration. */
-/*!< Uncomment the following line if you need to relocate the vector table
-     anywhere in Flash or Sram, else the vector table is kept at the automatic
-     remap of boot address selected */
-/* #define USER_VECT_TAB_ADDRESS */
+// Note: Following vector table addresses must be defined in line with linker configuration.
+// !< Uncomment the following line if you need to relocate the vector table
+//    anywhere in Flash or Sram, else the vector table is kept at the automatic
+//    remap of boot address selected
+// #define USER_VECT_TAB_ADDRESS
 
 #if defined(USER_VECT_TAB_ADDRESS)
-/*!< Uncomment the following line if you need to relocate your vector Table
-     in Sram else user remap will be done in Flash. */
-/* #define VECT_TAB_SRAM */
+//!< Uncomment the following line if you need to relocate your vector Table
+//   in Sram else user remap will be done in Flash.
+// #define VECT_TAB_SRAM
 #if defined(VECT_TAB_SRAM)
-#define VECT_TAB_BASE_ADDRESS   SRAM_BASE       /*!< Vector Table base address field.
-                                                     This value must be a multiple of 0x200. */
-#define VECT_TAB_OFFSET         0x00000000U     /*!< Vector Table base offset field.
-                                                     This value must be a multiple of 0x200. */
+#define VECT_TAB_BASE_ADDRESS   SRAM_BASE       //!< Vector Table base address field.
+                                                //   This value must be a multiple of 0x200.
+#define VECT_TAB_OFFSET         0x00000000U     //!< Vector Table base offset field.
+                                                //   This value must be a multiple of 0x200.
 #else
-#define VECT_TAB_BASE_ADDRESS   FLASH_BASE      /*!< Vector Table base address field.
-                                                     This value must be a multiple of 0x200. */
-#define VECT_TAB_OFFSET         0x00000000U     /*!< Vector Table base offset field.
-                                                     This value must be a multiple of 0x200. */
-#endif /* VECT_TAB_SRAM */
-#endif /* USER_VECT_TAB_ADDRESS */
+#define VECT_TAB_BASE_ADDRESS   FLASH_BASE      //!< Vector Table base address field.
+                                                //     This value must be a multiple of 0x200.
+#define VECT_TAB_OFFSET         0x00000000U     //!< Vector Table base offset field.
+                                                //   This value must be a multiple of 0x200.
+#endif // VECT_TAB_SRAM
+#endif // USER_VECT_TAB_ADDRESS
 
 /******************************************************************************/
-/**
-  * @}
-  */
-
-/** @addtogroup STM32L1xx_System_Private_Macros
-  * @{
-  */
-
-/**
-  * @}
-  */
-
-/** @addtogroup STM32L1xx_System_Private_Variables
-  * @{
-  */
-  /* This variable is updated in three ways:
-      1) by calling CMSIS function SystemCoreClockUpdate()
-      2) by calling HAL API function HAL_RCC_GetHCLKFreq()
-      3) each time HAL_RCC_ClockConfig() is called to configure the system clock frequency
-         Note: If you use this function to configure the system clock; then there
-               is no need to call the 2 first functions listed above, since SystemCoreClock
-               variable is updated automatically.
-  */
+// This variable is updated in three ways:
+//   1) by calling CMSIS function SystemCoreClockUpdate()
+//   2) by calling HAL API function HAL_RCC_GetHCLKFreq()
+//   3) each time HAL_RCC_ClockConfig() is called to configure the system clock frequency
+//      Note: If you use this function to configure the system clock; then there
+//            is no need to call the 2 first functions listed above, since SystemCoreClock
+//            variable is updated automatically.
 uint32_t SystemCoreClock        = 2097000U;
 const uint8_t PLLMulTable[9]    = {3U, 4U, 6U, 8U, 12U, 16U, 24U, 32U, 48U};
 const uint8_t AHBPrescTable[16] = {0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 1U, 2U, 3U, 4U, 6U, 7U, 8U, 9U};
 const uint8_t APBPrescTable[8]  = {0U, 0U, 0U, 0U, 1U, 2U, 3U, 4U};
 
-/**
-  * @}
-  */
-
-/** @addtogroup STM32L1xx_System_Private_FunctionPrototypes
-  * @{
-  */
 
 #if defined (STM32L151xD) || defined (STM32L152xD) || defined (STM32L162xD)
 #ifdef DATA_IN_ExtSRAM
-  static void SystemInit_ExtMemCtl(void); 
-#endif /* DATA_IN_ExtSRAM */
-#endif /* STM32L151xD || STM32L152xD || STM32L162xD */
+static void SystemInit_ExtMemCtl(void);
+#endif // DATA_IN_ExtSRAM
+#endif // STM32L151xD || STM32L152xD || STM32L162xD
 
 /**
-  * @}
-  */
-
-/** @addtogroup STM32L1xx_System_Private_Functions
-  * @{
-  */
-
-/**
-  * @brief  Setup the microcontroller system.
-  *         Initialize the Embedded Flash Interface, the PLL and update the 
-  *         SystemCoreClock variable.
-  * @param  None
-  * @retval None
-  */
-void SystemInit (void)
-{
+ * @brief  Setup the microcontroller system.
+ *         Initialize the Embedded Flash Interface, the PLL and update the
+ *         SystemCoreClock variable.
+ */
+void SystemInit (void) {
 #ifdef DATA_IN_ExtSRAM
   SystemInit_ExtMemCtl(); 
 #endif /* DATA_IN_ExtSRAM */
     
-  /* Configure the Vector Table location -------------------------------------*/
+  // Configure the Vector Table location
 #if defined(USER_VECT_TAB_ADDRESS)
-  SCB->VTOR = VECT_TAB_BASE_ADDRESS | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM. */
-#endif /* USER_VECT_TAB_ADDRESS */
+  SCB->VTOR = VECT_TAB_BASE_ADDRESS | VECT_TAB_OFFSET; // Vector Table Relocation in Internal SRAM.
+#endif // USER_VECT_TAB_ADDRESS
 }
 
 /**
@@ -206,27 +148,28 @@ void SystemInit (void)
   * @param  None
   * @retval None
   */
-void SystemCoreClockUpdate (void)
-{
+void SystemCoreClockUpdate (void) {
   uint32_t tmp = 0, pllmul = 0, plldiv = 0, pllsource = 0, msirange = 0;
 
-  /* Get SYSCLK source -------------------------------------------------------*/
+  // Get SYSCLK source ---------------------------------------------------------
   tmp = RCC->CFGR & RCC_CFGR_SWS;
   
-  switch (tmp)
-  {
-    case 0x00:  /* MSI used as system clock */
+  switch (tmp) {
+    case 0x00: {  // MSI used as system clock
       msirange = (RCC->ICSCR & RCC_ICSCR_MSIRANGE) >> 13;
       SystemCoreClock = (32768 * (1 << (msirange + 1)));
       break;
-    case 0x04:  /* HSI used as system clock */
+    }
+    case 0x04: { // HSI used as system clock
       SystemCoreClock = HSI_VALUE;
       break;
-    case 0x08:  /* HSE used as system clock */
+    }
+    case 0x08: { // HSE used as system clock
       SystemCoreClock = HSE_VALUE;
       break;
-    case 0x0C:  /* PLL used as system clock */
-      /* Get PLL clock source and multiplication factor ----------------------*/
+    }
+    case 0x0C: { // PLL used as system clock
+      // Get PLL clock source and multiplication factor ------------------------
       pllmul = RCC->CFGR & RCC_CFGR_PLLMUL;
       plldiv = RCC->CFGR & RCC_CFGR_PLLDIV;
       pllmul = PLLMulTable[(pllmul >> 18)];
@@ -234,59 +177,55 @@ void SystemCoreClockUpdate (void)
       
       pllsource = RCC->CFGR & RCC_CFGR_PLLSRC;
 
-      if (pllsource == 0x00)
-      {
-        /* HSI oscillator clock selected as PLL clock entry */
+      if (pllsource == 0x00) {
+        // HSI oscillator clock selected as PLL clock entry
         SystemCoreClock = (((HSI_VALUE) * pllmul) / plldiv);
-      }
-      else
-      {
-        /* HSE selected as PLL clock entry */
+      } else {
+        // HSE selected as PLL clock entry
         SystemCoreClock = (((HSE_VALUE) * pllmul) / plldiv);
       }
       break;
-    default: /* MSI used as system clock */
+    }
+    default: { // MSI used as system clock
       msirange = (RCC->ICSCR & RCC_ICSCR_MSIRANGE) >> 13;
       SystemCoreClock = (32768 * (1 << (msirange + 1)));
       break;
+    }
   }
-  /* Compute HCLK clock frequency --------------------------------------------*/
-  /* Get HCLK prescaler */
+
+  // Compute HCLK clock frequency ----------------------------------------------
+  // Get HCLK prescaler
   tmp = AHBPrescTable[((RCC->CFGR & RCC_CFGR_HPRE) >> 4)];
-  /* HCLK clock frequency */
+
+  // HCLK clock frequency
   SystemCoreClock >>= tmp;
 }
 
 #if defined (STM32L151xD) || defined (STM32L152xD) || defined (STM32L162xD)
 #ifdef DATA_IN_ExtSRAM
 /**
-  * @brief  Setup the external memory controller.
-  *         Called in SystemInit() function before jump to main.
-  *         This function configures the external SRAM mounted on STM32L152D_EVAL board
-  *         This SRAM will be used as program data memory (including heap and stack).
-  * @param  None
-  * @retval None
-  */
-void SystemInit_ExtMemCtl(void)
-{
+ * @brief  Setup the external memory controller.
+ *         Called in SystemInit() function before jump to main.
+ *         This function configures the external SRAM mounted on STM32L152D_EVAL board
+ *         This SRAM will be used as program data memory (including heap and stack).
+ */
+void SystemInit_ExtMemCtl(void) {
   __IO uint32_t tmpreg = 0;
 
-  /* Flash 1 wait state */
+  // Flash 1 wait state
   FLASH->ACR |= FLASH_ACR_LATENCY;
   
-  /* Power enable */
+  // Power enable
   RCC->APB1ENR |= RCC_APB1ENR_PWREN;
   
-  /* Delay after an RCC peripheral clock enabling */
+  // Delay after an RCC peripheral clock enabling
   tmpreg = READ_BIT(RCC->APB1ENR, RCC_APB1ENR_PWREN);
 
-  /* Select the Voltage Range 1 (1.8 V) */
+  // Select the Voltage Range 1 (1.8 V)
   PWR->CR = PWR_CR_VOS_0;
   
-  /* Wait Until the Voltage Regulator is ready */
-  while((PWR->CSR & PWR_CSR_VOSF) != RESET)
-  {
-  }
+  // Wait Until the Voltage Regulator is ready
+  while((PWR->CSR & PWR_CSR_VOSF) != RESET) { }
   
 /*-- GPIOs Configuration -----------------------------------------------------*/
 /*
@@ -308,70 +247,70 @@ void SystemInit_ExtMemCtl(void)
  +-------------------+
 */
 
-  /* Enable GPIOD, GPIOE, GPIOF and GPIOG interface clock */
+  // Enable GPIOD, GPIOE, GPIOF and GPIOG interface clock
   RCC->AHBENR   = 0x000080D8;
   
-  /* Delay after an RCC peripheral clock enabling */
+  // Delay after an RCC peripheral clock enabling
   tmpreg = READ_BIT(RCC->AHBENR, RCC_AHBENR_GPIODEN);
   
-  /* Connect PDx pins to FSMC Alternate function */
+  // Connect PDx pins to FSMC Alternate function
   GPIOD->AFR[0]  = 0x00CC00CC;
   GPIOD->AFR[1]  = 0xCCCCCCCC;
-  /* Configure PDx pins in Alternate function mode */  
+  // Configure PDx pins in Alternate function mode
   GPIOD->MODER   = 0xAAAA0A0A;
-  /* Configure PDx pins speed to 40 MHz */  
+  // Configure PDx pins speed to 40 MHz
   GPIOD->OSPEEDR = 0xFFFF0F0F;
-  /* Configure PDx pins Output type to push-pull */  
+  // Configure PDx pins Output type to push-pull
   GPIOD->OTYPER  = 0x00000000;
-  /* No pull-up, pull-down for PDx pins */ 
+  // No pull-up, pull-down for PDx pins
   GPIOD->PUPDR   = 0x00000000;
 
-  /* Connect PEx pins to FSMC Alternate function */
+  // Connect PEx pins to FSMC Alternate function
   GPIOE->AFR[0]  = 0xC00000CC;
   GPIOE->AFR[1]  = 0xCCCCCCCC;
-  /* Configure PEx pins in Alternate function mode */ 
+  // Configure PEx pins in Alternate function mode
   GPIOE->MODER   = 0xAAAA800A;
-  /* Configure PEx pins speed to 40 MHz */ 
+  // Configure PEx pins speed to 40 MHz
   GPIOE->OSPEEDR = 0xFFFFC00F;
-  /* Configure PEx pins Output type to push-pull */  
+  // Configure PEx pins Output type to push-pull
   GPIOE->OTYPER  = 0x00000000;
-  /* No pull-up, pull-down for PEx pins */ 
+  // No pull-up, pull-down for PEx pins
   GPIOE->PUPDR   = 0x00000000;
 
-  /* Connect PFx pins to FSMC Alternate function */
+  // Connect PFx pins to FSMC Alternate function
   GPIOF->AFR[0]  = 0x00CCCCCC;
   GPIOF->AFR[1]  = 0xCCCC0000;
-  /* Configure PFx pins in Alternate function mode */   
+  // Configure PFx pins in Alternate function mode
   GPIOF->MODER   = 0xAA000AAA;
-  /* Configure PFx pins speed to 40 MHz */ 
+  // Configure PFx pins speed to 40 MHz
   GPIOF->OSPEEDR = 0xFF000FFF;
-  /* Configure PFx pins Output type to push-pull */  
+  // Configure PFx pins Output type to push-pull
   GPIOF->OTYPER  = 0x00000000;
-  /* No pull-up, pull-down for PFx pins */ 
+  // No pull-up, pull-down for PFx pins
   GPIOF->PUPDR   = 0x00000000;
 
-  /* Connect PGx pins to FSMC Alternate function */
+  // Connect PGx pins to FSMC Alternate function
   GPIOG->AFR[0]  = 0x00CCCCCC;
   GPIOG->AFR[1]  = 0x00000C00;
-  /* Configure PGx pins in Alternate function mode */ 
+  // Configure PGx pins in Alternate function mode
   GPIOG->MODER   = 0x00200AAA;
-  /* Configure PGx pins speed to 40 MHz */ 
+  // Configure PGx pins speed to 40 MHz
   GPIOG->OSPEEDR = 0x00300FFF;
-  /* Configure PGx pins Output type to push-pull */  
+  // Configure PGx pins Output type to push-pull
   GPIOG->OTYPER  = 0x00000000;
   /* No pull-up, pull-down for PGx pins */ 
   GPIOG->PUPDR   = 0x00000000;
   
-/*-- FSMC Configuration ------------------------------------------------------*/
-  /* Enable the FSMC interface clock */
+  //-- FSMC Configuration ------------------------------------------------------
+  // Enable the FSMC interface clock
   RCC->AHBENR    = 0x400080D8;
 
-  /* Delay after an RCC peripheral clock enabling */
+  // Delay after an RCC peripheral clock enabling
   tmpreg = READ_BIT(RCC->AHBENR, RCC_AHBENR_FSMCEN);
   
   (void)(tmpreg);
   
-  /* Configure and enable Bank1_SRAM3 */
+  // Configure and enable Bank1_SRAM3
   FSMC_Bank1->BTCR[4]  = 0x00001011;
   FSMC_Bank1->BTCR[5]  = 0x00000300;
   FSMC_Bank1E->BWTR[4] = 0x0FFFFFFF;
@@ -408,19 +347,7 @@ void SystemInit_ExtMemCtl(void)
 */
   
 }
-#endif /* DATA_IN_ExtSRAM */
-#endif /* STM32L151xD || STM32L152xD || STM32L162xD */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
+#endif // DATA_IN_ExtSRAM
+#endif // STM32L151xD || STM32L152xD || STM32L162xD
 
 
