@@ -3,9 +3,13 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net6.0</TargetFramework>
-        <RootNamespace>PpkII_CLI</RootNamespace>
+        <RootNamespace>CCDevelop.PPK2CLI</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\CCDevelop.PPK2.NET\CCDevelop.PPK2.NET.csproj" />
+    </ItemGroup>
 
 </Project>

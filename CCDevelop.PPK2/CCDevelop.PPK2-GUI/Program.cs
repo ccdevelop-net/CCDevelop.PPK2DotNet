@@ -1,4 +1,4 @@
-﻿namespace PpkII_GUI;
+﻿namespace CCDevelop.PPK2GUI;
 
 internal class Program {
   private static void Main(string[] args) {
