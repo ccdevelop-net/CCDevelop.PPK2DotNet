@@ -12,6 +12,10 @@ internal class Program {
   #endregion
   
   private static void Main(string[] args) {
+    while (!System.Diagnostics.Debugger.IsAttached) {
+      Thread.Sleep(1000);
+    }
+
     // Add function event then process exit
     AppDomain.CurrentDomain.ProcessExit += CurrentDomainOnProcessExit;
 
