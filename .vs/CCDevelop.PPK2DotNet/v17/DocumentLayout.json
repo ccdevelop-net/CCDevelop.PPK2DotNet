@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "Y:\\work\\CCDevelop.PPK2DotNet\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA8C5A6-24D3-4AC6-84E7-A99B45F7ADE5}|CCDevelop.PPK2\\CCDevelop.PPK2-CLI\\CCDevelop.PPK2-CLI.csproj|y:\\work\\ccdevelop.ppk2dotnet\\ccdevelop.ppk2\\ccdevelop.ppk2-cli\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA8C5A6-24D3-4AC6-84E7-A99B45F7ADE5}|CCDevelop.PPK2\\CCDevelop.PPK2-CLI\\CCDevelop.PPK2-CLI.csproj|solutionrelative:ccdevelop.ppk2\\ccdevelop.ppk2-cli\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "Y:\\work\\CCDevelop.PPK2DotNet\\CCDevelop.PPK2\\CCDevelop.PPK2-CLI\\Program.cs",
+              "RelativeDocumentMoniker": "CCDevelop.PPK2\\CCDevelop.PPK2-CLI\\Program.cs",
+              "ToolTip": "Y:\\work\\CCDevelop.PPK2DotNet\\CCDevelop.PPK2\\CCDevelop.PPK2-CLI\\Program.cs",
+              "RelativeToolTip": "CCDevelop.PPK2\\CCDevelop.PPK2-CLI\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAZAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-12T06:22:09.363Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

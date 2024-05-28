@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "adapter": "ssh.exe",
+  "adapterArgs": " liquidsnake@10.0.2.2 -T  ~/.vs-debugger/vs2022/vsdbg  --engineLogging=./VSLinuxDbg/CCDevelop.PPK2-CLI/_vsdbg.log",
+  "configurations": [
+    {
+      "name": "Debug on Linux",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "dotnet",
+      "args": [
+        "CCDevelop.PPK2-CLI.dll"
+      ],
+      "cwd": "./VSLinuxDbg/CCDevelop.PPK2-CLI",
+      "console": "integratedTerminal"
+    }
+  ]
+}
