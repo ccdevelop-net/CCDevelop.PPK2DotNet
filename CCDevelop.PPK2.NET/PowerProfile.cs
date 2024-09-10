@@ -1,4 +1,5 @@
-using CCDevelop.SerialPort;
+using System.Diagnostics;
+using CCDevelop.PPK2.NET.Api;
 
 namespace CCDevelop.PPK2.NET {
   public class PowerProfile {
@@ -9,11 +10,11 @@ namespace CCDevelop.PPK2.NET {
     }
     
     #region PRIVATE - Variables
-
     private Api.Ppk2 _ppk2       = null;
-    private string   _serialName = string.Empty; // Name of the serial port
-    private uint     _voltage    = 0;            // Output Voltage
-    private string   _filename   = string.Empty; // Name of the serial port
+    private string   _serialName;   // Name of the serial port
+    private uint     _voltage  = 0; // Output Voltage
+    private string   _filename;     // Name of the serial port
+    private string   _error;
     #endregion
 
     #region PUBLIC - Functions
@@ -31,15 +32,21 @@ namespace CCDevelop.PPK2.NET {
         _ppk2 = new Api.Ppk2(_serialName);
       }
       
-      
+      // Read Modifiers
       if (_ppk2.GetModifiers()) {
-        
-      } 
-      /*print(f"Initialized ppk2 api: {ret}")
-      except Exception as e:
-      print(f"Error initializing power profiler: {e}")
-      ret = None
-      raise e*/
+        if (_ppk2.UseSourceMeter()) {
+          if (_ppk2.SetSourceVoltage(_voltage)) {
+            Debug.WriteLine($"Set power profiler source voltage: {_voltage}");
+          } else {
+            return false;
+          }
+        } else {
+          return false;
+        }
+      } else {
+        _error = $"Error initializing power profiler: {_serialName}";
+        return false;
+      }
 
       return true;
     }
@@ -48,18 +55,24 @@ namespace CCDevelop.PPK2.NET {
       _ppk2.Dispose();
     }
     //------------------------------------------------------------------------------------------------------------------
-    #endregion
+    public bool EnablePower() {
+      // Enable ppk2 power
+      if (_ppk2 != null) {
+        return _ppk2.ToggleDutPower(Ppk2.Ppk2PowerMode.On);
+      }
 
-    private string DiscoverPort() {
-      /*"""Discovers ppk2 serial port"""
-      ppk2s_connected = PPK2_API.list_devices()
-      if (len(ppk2s_connected) == 1):
-      ppk2_port = ppk2s_connected[0]
-      print(f'Found PPK2 at {ppk2_port}')
-      return ppk2_port
-      else:
-      print(f'Too many connected PPK2\'s: {ppk2s_connected}')*/
-      return string.Empty;
+      return false;
     }
+    //------------------------------------------------------------------------------------------------------------------
+    public bool DisablePower() {
+      // Disable ppk2 power
+      if (_ppk2 != null) {
+        return _ppk2.ToggleDutPower(Ppk2.Ppk2PowerMode.Off);
+      }
+
+      return false;
+    }
+
+#endregion
   }
 }

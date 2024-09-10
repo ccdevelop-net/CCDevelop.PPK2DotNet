@@ -1,3 +1,6 @@
 [submodule "CCDevelop.SerialPort"]
 	path = CCDevelop.SerialPort
 	url = https://github.com/ccdevelop-net/CCDevelop.SerialPort.git
+[submodule "CCDevelop.CommandParser"]
+	path = CCDevelop.CommandParser
+	url = https://github.com/ccdevelop-net/CCDevelop.CommandParser.git
