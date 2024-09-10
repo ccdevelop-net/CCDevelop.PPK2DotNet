@@ -2,13 +2,19 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>CCDevelop.PPK2CLI</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <TargetFramework>net8.0</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <WarningsAsErrors>;NU1605;SYSLIB0011;</WarningsAsErrors>
+      <NoWarn>1701;1702;CS1998</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\CCDevelop.CommandParser\CCDevelop.CommandParser.csproj" />
       <ProjectReference Include="..\..\CCDevelop.PPK2.NET\CCDevelop.PPK2.NET.csproj" />
     </ItemGroup>
 
