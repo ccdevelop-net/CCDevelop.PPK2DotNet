@@ -1,6 +1,21 @@
-﻿using System;
+﻿// CCDevelop - Power Profiler Kit II API
+// Copyright (C) 2024 - Cristian Croci
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -89,8 +104,7 @@ namespace CCDevelop.PPK2.NET.Api {
       _readThread.Start();
     }
 
-#region PUBLIC - Implement IDisposable
-
+    #region PUBLIC - Implement IDisposable
     //------------------------------------------------------------------------------------------------------------------
     public void Dispose() {
       if (_serialPpk2 != null) {
@@ -103,13 +117,10 @@ namespace CCDevelop.PPK2.NET.Api {
         _serialPpk2.Close();
       }
     }
-
     //------------------------------------------------------------------------------------------------------------------
+    #endregion
 
-#endregion
-
-#region PRIVATE - Serial Thread
-
+    #region PRIVATE - Serial Thread
     //------------------------------------------------------------------------------------------------------------------
     /// <summary>
     /// Read serial port thread 
@@ -141,13 +152,10 @@ namespace CCDevelop.PPK2.NET.Api {
         }
       }
     }
-
     //------------------------------------------------------------------------------------------------------------------
+    #endregion
 
-#endregion
-
-#region PUBLIC - Static Functions
-
+    #region PUBLIC - Static Functions
     //------------------------------------------------------------------------------------------------------------------
     public static string[] ListDevices() {
       SerialPortInfo[] serials = LinuxSerialPort.Ports();
@@ -166,13 +174,10 @@ namespace CCDevelop.PPK2.NET.Api {
 
       return devices.Count > 0 ? devices.ToArray() : null;
     }
-
     //------------------------------------------------------------------------------------------------------------------
+    #endregion
 
-#endregion
-
-#region PUBLIC - Functions
-
+    #region PUBLIC - Functions
     //------------------------------------------------------------------------------------------------------------------
     public bool GetModifiers() {
       // Gets modifiers from device memory
@@ -189,7 +194,6 @@ namespace CCDevelop.PPK2.NET.Api {
       _mode = Ppk2Modes.AmpereMode;
       return WriteSerial(Ppk2Command.SetPowerMode, new[] { (byte)Ppk2Command.TriggerSet }); // 17,1
     }
-
     //------------------------------------------------------------------------------------------------------------------
     public bool UseSourceMeter() {
       // Configure device to use source meter
@@ -239,7 +243,7 @@ namespace CCDevelop.PPK2.NET.Api {
       return WriteSerial(Ppk2Command.AverageStart);
     }
     //------------------------------------------------------------------------------------------------------------------
-    public bool StopMmeasuring() {
+    public bool StopMeasuring() {
       // Stop continuous measurement
       return WriteSerial(Ppk2Command.AverageStop);
     }
@@ -356,10 +360,9 @@ namespace CCDevelop.PPK2.NET.Api {
       return digitalChannels;
     }
     //------------------------------------------------------------------------------------------------------------------
-#endregion
+    #endregion
 
-#region PRIVATE - Functions
-
+    #region PRIVATE - Functions
     //------------------------------------------------------------------------------------------------------------------
     private static ISerialPort CreateSerialPort(string portName, int baudRate = 115200, int dataBits = 8,
                                                 SerialPort.Abstractions.Enums.StopBits stopBits =
@@ -420,25 +423,23 @@ namespace CCDevelop.PPK2.NET.Api {
                                                                                };
       }
     }
-
     //------------------------------------------------------------------------------------------------------------------
     private string ReadMetadata() {
+      // Function Variables
       string read = string.Empty;
 
-      /* Read metadata */
-      // try to get metadata from device
+      // Read metadata try to get metadata from device
       for (int i = 0; i < 5; i++) {
+        // Wait 100 ms
         Thread.Sleep(100);
 
+        // Lock buffer
         lock (_lock) {
           read += Encoding.ASCII.GetString(_receivedData.ToArray(), 0, _receivedData.Count);
           _receivedData.Clear();
         }
-
-        // it appears the second reading is the metadata
-        //read =  ser.Read(ser.BytesToRead);
-
-        // TODO add a read_until serial read function with a timeout
+        
+        // TODO add serial read function with a timeout
         if (!string.IsNullOrEmpty(read) && read.Contains("END")) {
           return read;
         }
@@ -446,12 +447,11 @@ namespace CCDevelop.PPK2.NET.Api {
 
       return string.Empty;
     }
-
     //------------------------------------------------------------------------------------------------------------------
     private bool ParseMetadata(string metadata) {
-      /* Parse metadata and store it to modifiers */
-      // TODO handle more robustly
+      // Parse metadata and store it to modifiers
       try {
+        // Function Variables
         IEnumerable<string[]> dataSplit = metadata.Split('\n').Select(row => row.Split(':'));
 
         // Loop all modifiers
@@ -488,12 +488,11 @@ namespace CCDevelop.PPK2.NET.Api {
 
         return true;
       } catch (Exception e) {
-        // if exception triggers serial port is probably not correct
+        // If exception triggers serial port is probably not correct
         _ = e.ToString();
         return false;
       }
     }
-
     //------------------------------------------------------------------------------------------------------------------
     private byte[] PackStruct(Ppk2Command command, byte[] cmdData = null) {
       byte[] data = new byte[1 + (cmdData != null ? cmdData.Length : 0)];
@@ -518,15 +517,14 @@ namespace CCDevelop.PPK2.NET.Api {
 
       return true;
     }
-
     //------------------------------------------------------------------------------------------------------------------
     private Dictionary<string, int> GenerateMask(int bits, int pos) {
+      // Function Variables
       int mask = ((1 << bits) - 1) << pos;
-      // TODO: Deve essere senza segno la maschera
+      
       mask = TwosComp(mask);
       return new Dictionary<string, int> { { "mask", mask }, { "pos", pos } };
     }
-
     //------------------------------------------------------------------------------------------------------------------
     private int TwosComp(int val) {
       if ((val & (1 << (32 - 1))) != 0) {
@@ -535,7 +533,6 @@ namespace CCDevelop.PPK2.NET.Api {
 
       return val;
     }
-
     //------------------------------------------------------------------------------------------------------------------
     private byte[] ConvertSourceVoltage(uint voltage) {
       // Function Variables
@@ -570,18 +567,15 @@ namespace CCDevelop.PPK2.NET.Api {
 
       return data;
     }
-
     //------------------------------------------------------------------------------------------------------------------
     private int DigitalToAnalog(byte[] adcValue) {
       return BitConverter.ToInt32(adcValue, 0);
     }
-
     //------------------------------------------------------------------------------------------------------------------
     private int GetMaskedValue(int value, Dictionary<string, int> meas, bool isBit = false) {
       if (isBit) {}
       return (value & meas["mask"]) >> meas["pos"];
     }
-
     //------------------------------------------------------------------------------------------------------------------
     private (double?, int?) HandleRawData(int adcValue) {
       // Convert raw value to analog value
@@ -649,6 +643,6 @@ namespace CCDevelop.PPK2.NET.Api {
       return adc;
     }
     //------------------------------------------------------------------------------------------------------------------
-#endregion
+    #endregion
   }
 }
