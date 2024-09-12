@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PpkII-GUI", "CCDevelop.PPK2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Submodules", "Submodules", "{2859520E-DDD0-406D-BC93-CE88BB9837CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCDevelop.SerialPort", "CCDevelop.SerialPort\CCDevelop.SerialPort\CCDevelop.SerialPort.csproj", "{09ED928E-A70B-4FA8-B26D-01CFCAC50BA2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCDevelop.SerialPort", "CCDevelop.SerialPort\CCDevelop.SerialPort.csproj", "{09ED928E-A70B-4FA8-B26D-01CFCAC50BA2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCDevelop.CommandParser", "CCDevelop.CommandParser\CCDevelop.CommandParser.csproj", "{6E000FB1-6659-416B-BF2A-713A266A394F}"
 EndProject

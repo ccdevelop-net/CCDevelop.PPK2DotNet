@@ -10,7 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CCDevelop.SerialPort\CCDevelop.SerialPort\CCDevelop.SerialPort.csproj" />
+      <ProjectReference Include="..\CCDevelop.SerialPort\CCDevelop.SerialPort.csproj" />
     </ItemGroup>
 
 </Project>
