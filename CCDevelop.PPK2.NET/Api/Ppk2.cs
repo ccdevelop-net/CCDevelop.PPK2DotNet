@@ -26,9 +26,8 @@ using CCDevelop.SerialPort.Abstractions;
 namespace CCDevelop.PPK2.NET.Api {
   public class Ppk2 : IDisposable {
     #region PRIVATE - Variables
-
-    private ISerialPort _serialPpk2; // Serial port driver
-
+    // Serial port driver interface
+    private ISerialPort _serialPpk2; 
     // PPK2 Modifiers value
     private Dictionary<string, dynamic> _modifiers = new () {
                                                        { "Calibrated", 0 },
@@ -52,9 +51,9 @@ namespace CCDevelop.PPK2.NET.Api {
 
     private string _mode = string.Empty;
 
-    private Dictionary<string, int> _measAdc;   //self._generate_mask(14, 0)
-    private Dictionary<string, int> _measRange; //self._generate_mask(3, 14) 
-    private Dictionary<string, int> _measLogic; //self._generate_mask(8, 24)
+    private Dictionary<string, int> _measAdc;   // 14 bits at position 0 
+    private Dictionary<string, int> _measRange; // 3 bits at position 14 
+    private Dictionary<string, int> _measLogic; // 8 bits at position 24
 
     private double _rollingAvg;
     private double _rollingAvg4;
@@ -69,13 +68,14 @@ namespace CCDevelop.PPK2.NET.Api {
     private Thread     _readThread;
     private List<byte> _receivedData  = new();
 
+    // Remainder informations
     private Dictionary<string, dynamic> _remainder = new() {
                                                        { "sequence", new byte[0] },
                                                        { "len", 0 },
                                                      };
 
+    // Lock object for receiving data
     private object _lock = new();
-
     #endregion
 
     #region PRIVATE - Constants
@@ -83,12 +83,19 @@ namespace CCDevelop.PPK2.NET.Api {
     #endregion
 
     #region PUBLIC - Enumerators
+    /// <summary>
+    /// PPKII Power Modes
+    /// </summary>
     public enum Ppk2PowerMode : byte {
       Off = 0,
       On  = 1,
     }
     #endregion
 
+    /// <summary>
+    /// Constructor for Ppk2 class
+    /// </summary>
+    /// <param name="serialName">Name of serial port to use</param>
     public Ppk2(string serialName) {
       // Generate masks
       _measAdc   = GenerateMask(14, 0);
@@ -106,6 +113,9 @@ namespace CCDevelop.PPK2.NET.Api {
 
     #region PUBLIC - Implement IDisposable
     //------------------------------------------------------------------------------------------------------------------
+    /// <summary>
+    /// Dispose function
+    /// </summary>
     public void Dispose() {
       if (_serialPpk2 != null) {
         WriteSerial(Ppk2Command.Reset);
@@ -157,19 +167,25 @@ namespace CCDevelop.PPK2.NET.Api {
 
     #region PUBLIC - Static Functions
     //------------------------------------------------------------------------------------------------------------------
+    /// <summary>
+    /// List PPKII device present in the system
+    /// </summary>
+    /// <returns>Return array of the device's serial ports</returns>
     public static string[] ListDevices() {
+      // Function Variables
       SerialPortInfo[] serials = LinuxSerialPort.Ports();
       List<string>     devices = new List<string>();
 
+      // Check if found some ports
       if (serials != null) {
         foreach (SerialPortInfo desc in serials) {
           if (desc.Description.Contains("PPK2")) {
-            //return new[] { desc.Name };
             devices.Add(desc.Name);
           }
         }
       }
 
+      // Execute sorting of the array
       devices.Sort();
 
       return devices.Count > 0 ? devices.ToArray() : null;
@@ -179,6 +195,10 @@ namespace CCDevelop.PPK2.NET.Api {
 
     #region PUBLIC - Functions
     //------------------------------------------------------------------------------------------------------------------
+    /// <summary>
+    /// Read modifiers from device
+    /// </summary>
+    /// <returns>Return <see cref="true"/>if modifiers are succesfully read otherwise <see cref="false"/></returns>
     public bool GetModifiers() {
       // Gets modifiers from device memory
       if (WriteSerial(Ppk2Command.GetMetaData)) {
@@ -189,22 +209,34 @@ namespace CCDevelop.PPK2.NET.Api {
       return false;
     }
     //------------------------------------------------------------------------------------------------------------------
+    /// <summary>
+    /// Activate device in ampere mode
+    /// </summary>
+    /// <returns>Return <see cref="true"/>if modifiers are succesfully read otherwise <see cref="false"/></returns>
     public bool UseAmpereMeter() {
       // Configure device to use ampere meter
       _mode = Ppk2Modes.AmpereMode;
       return WriteSerial(Ppk2Command.SetPowerMode, new[] { (byte)Ppk2Command.TriggerSet }); // 17,1
     }
     //------------------------------------------------------------------------------------------------------------------
+    /// <summary>
+    /// Activate device in source mode
+    /// </summary>
+    /// <returns>Return <see cref="true"/>if modifiers are succesfully read otherwise <see cref="false"/></returns>
     public bool UseSourceMeter() {
       // Configure device to use source meter
       _mode = Ppk2Modes.SourceMode;
       return WriteSerial(Ppk2Command.SetPowerMode, new[] { (byte)Ppk2Command.AvgNumSet });
     }
     //------------------------------------------------------------------------------------------------------------------
+    /// <summary>
+    /// Set voltage to use
+    /// </summary>
+    /// <param name="voltage">Voltage in millivolt range from 800 to 5000</param>
+    /// <returns>Return <see cref="true"/>if modifiers are succesfully read otherwise <see cref="false"/></returns>
     public bool SetSourceVoltage(uint voltage) {
       // Inits device - based on observation only REGULATOR_SET is the command.
       // The other two values correspond to the voltage level.
-      //
       // 800mV is the lowest setting - [3,32] - the values then increase linearly
 
       byte[] data = ConvertSourceVoltage(voltage);
@@ -216,6 +248,11 @@ namespace CCDevelop.PPK2.NET.Api {
       return false;
     }
     //------------------------------------------------------------------------------------------------------------------
+    /// <summary>
+    /// Enable and disable power for DUT 
+    /// </summary>
+    /// <param name="mode">See <paramref name="Ppk2PowerMode"/> enumerator for mode</param>
+    /// <returns>Return <see cref="true"/>if modifiers are succesfully read otherwise <see cref="false"/></returns>
     public bool ToggleDutPower(Ppk2PowerMode mode) {
       // Toggle DUT power based on parameter
       if (mode == Ppk2PowerMode.On) {
@@ -233,6 +270,7 @@ namespace CCDevelop.PPK2.NET.Api {
     /// Start continuous measurement
     /// </summary>
     /// <returns>Return true if mesuring is started</returns>
+    /// <returns>Return <see cref="true"/> if mesuring is started otherwise <see cref="false"/></returns>
     public bool StartMeasuring() {
       if (_currentVdd == 0) {
         if (_mode == Ppk2Modes.SourceMode || _mode == Ppk2Modes.AmpereMode) {
@@ -243,11 +281,19 @@ namespace CCDevelop.PPK2.NET.Api {
       return WriteSerial(Ppk2Command.AverageStart);
     }
     //------------------------------------------------------------------------------------------------------------------
+    /// <summary>
+    /// Stop mesurement
+    /// </summary>
+    /// <returns>Return <see cref="true"/> if mesuring is stopped otherwise <see cref="false"/></returns>
     public bool StopMeasuring() {
       // Stop continuous measurement
       return WriteSerial(Ppk2Command.AverageStop);
     }
     //------------------------------------------------------------------------------------------------------------------
+    /// <summary>
+    /// Get raw data
+    /// </summary>
+    /// <returns>Array of bytes, are raw data measure</returns>
     public byte[] GetData() {
       // Function Variables
       byte[] data;
@@ -261,6 +307,10 @@ namespace CCDevelop.PPK2.NET.Api {
       return data;
     }
     //------------------------------------------------------------------------------------------------------------------
+    /// <summary>
+    /// Get amount of data to read
+    /// </summary>
+    /// <returns>Length of data in the buffer</returns>
     public int GetDataLength() {
       // Function Variables
       int retLength = 0;
@@ -273,6 +323,13 @@ namespace CCDevelop.PPK2.NET.Api {
       return retLength;
     }
     //------------------------------------------------------------------------------------------------------------------
+    /// <summary>
+    /// Convert raw data in sample value for analog and digital 
+    /// </summary>
+    /// <param name="data">Raw data to convert</param>
+    /// <param name="samples">Converted samples for analog measure</param>
+    /// <param name="rawDigitalOutput">Converted digitals I/O</param>
+    /// <returns>Return <see cref="true"/> if conversion success otherwise <see cref="false"/></returns>
     public bool GetSamples(byte[] data, out List<double> samples, out List<int> rawDigitalOutput) {
       // Function Variables
       const int sampleSize = 4; // one analog value is 4 bytes in size

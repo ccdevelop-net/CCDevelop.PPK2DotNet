@@ -15,7 +15,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\CCDevelop.CommandParser\CCDevelop.CommandParser.csproj" />
-      <ProjectReference Include="..\..\CCDevelop.PPK2.NET\CCDevelop.PPK2.NET.csproj" />
+      <ProjectReference Include="..\..\CCDevelop.PPK2NET\CCDevelop.PPK2.NET.csproj" />
     </ItemGroup>
 
 </Project>

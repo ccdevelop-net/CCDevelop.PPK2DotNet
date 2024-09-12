@@ -4,3 +4,6 @@
 [submodule "CCDevelop.CommandParser"]
 	path = CCDevelop.CommandParser
 	url = https://github.com/ccdevelop-net/CCDevelop.CommandParser.git
+[submodule "CCDevelop.PPK2NET"]
+	path = CCDevelop.PPK2NET
+	url = https://github.com/ccdevelop-net/CCDevelop.PPK2NET.git
