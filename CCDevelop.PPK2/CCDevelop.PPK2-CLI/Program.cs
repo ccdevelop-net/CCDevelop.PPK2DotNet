@@ -59,7 +59,14 @@ internal class Program {
 
     // Loop results
     foreach (CommandResult res in result) {
-      
+      // Valid output
+      if (res.Output != null) {
+        if (res.Output is bool) {
+          Console.WriteLine("Command Executed.");
+        } else {
+          Console.WriteLine("Command Failed!!!");
+        }
+      }
     }
 
     // Exit application

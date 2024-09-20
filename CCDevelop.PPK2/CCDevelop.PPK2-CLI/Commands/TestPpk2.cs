@@ -38,68 +38,68 @@ public class TestPpk2 : IConsoleCommand {
     _serialName = devices[0];
     _ppk2       = new Ppk2(_serialName);
     
-    Print("Read Modifiers : ");
+    Print(host, "Read Modifiers : ");
     if (!_ppk2.GetModifiers()) {
-      PrintError();      
+      PrintError(host);      
       return Task.FromResult<object?>(false);
     }
-    PrintSuccess();
+    PrintSuccess(host);
       
-    Print("Set source voltage at 3.3V : ");
+    Print(host, "Set source voltage at 3.3V : ");
     if (!_ppk2.SetSourceVoltage(3300)) {
-      PrintError();
+      PrintError(host);
       return Task.FromResult<object?>(false);
     }
-    PrintSuccess();
+    PrintSuccess(host);
     
     // Set source meter mode
-    Print("Set source meter : ");
+    Print(host, "Set source meter : ");
     if (!_ppk2.UseSourceMeter()) {
-      PrintError();
+      PrintError(host);
       return Task.FromResult<object?>(false);
     }  
-    PrintSuccess();
+    PrintSuccess(host);
     
     // Enable DUT power
-    Print("Power ON DUT : ");
+    Print(host, "Power ON DUT : ");
     if (!_ppk2.ToggleDutPower(Ppk2.Ppk2PowerMode.On)) {
-      PrintError();
+      PrintError(host);
       return Task.FromResult<object?>(false);
     }
-    PrintSuccess();
+    PrintSuccess(host);
 
     // Start Measuring
-    Print("Start measuring : ");
+    Print(host, "Start measuring : ");
     if (_ppk2.StartMeasuring()) {
-      PrintSuccess();
-      Print("");
+      PrintSuccess(host);
+      Print(host, "");
 
-      _ = ExecuteMeasure();
+      _ = ExecuteMeasure(host);
     }
 
     // Disable DUT power
-    Print("Power OFF DUT : ");
+    Print(host, "Power OFF DUT : ");
     if (!_ppk2.ToggleDutPower(Ppk2.Ppk2PowerMode.Off)) {
-      PrintError();
+      PrintError(host);
       return Task.FromResult<object?>(false);
     }
-    PrintSuccess();
+    PrintSuccess(host);
 
     // Set ampere meter mode
-    Print("Set ampere meter : ");
+    Print(host, "Set ampere meter : ");
     if (!_ppk2.UseAmpereMeter()) {
-      PrintError();
+      PrintError(host);
       return Task.FromResult<object?>(false);
     }  
-    PrintSuccess();
+    PrintSuccess(host);
 
     // Start Measuring
-    Print("Start measuring : ");
+    Print(host, "Start measuring : ");
     if (_ppk2.StartMeasuring()) {
-      PrintSuccess();
-      Print("");
+      PrintSuccess(host);
+      Print(host, "");
 
-      _ = ExecuteMeasure();
+      _ = ExecuteMeasure(host);
     }
 
     // Valid PPK2 class
@@ -111,7 +111,7 @@ public class TestPpk2 : IConsoleCommand {
     return Task.FromResult<object?>(null);
   }
 
-  private bool ExecuteMeasure() {
+  private bool ExecuteMeasure(IConsoleHost host) {
     try {
       if (_ppk2 == null) {
         return false;
@@ -149,13 +149,13 @@ public class TestPpk2 : IConsoleCommand {
           // Loop all channels
           int channel = 1;
           foreach (List<int> ch in digitalChannels) {
-            Print($"Digital CH {channel} : ");
+            Print(host, $"Digital CH {channel} : ");
             // Print last 10 values of each channel
             for (int bit = 0; bit < 10; bit++) {
-              Print($"{ch[bit]}");
+              Print(host,$"{ch[bit]}");
             }
             
-            Print(Environment.NewLine);
+            Print(host, Environment.NewLine);
 
             channel++;
           }
@@ -163,7 +163,7 @@ public class TestPpk2 : IConsoleCommand {
           Console.WriteLine();
         }
 
-        Print($"PPK2 Test Terminated.{Environment.NewLine}");
+        Print(host, $"PPK2 Test Terminated.{Environment.NewLine}");
         
         Thread.Sleep(10);
       }
@@ -175,21 +175,16 @@ public class TestPpk2 : IConsoleCommand {
     return true;
   }
   
-  private void Print(string toPrint) {
-    Console.ForegroundColor = ConsoleColor.White;
-    Console.Write(toPrint);
+  private void Print(IConsoleHost host, string toPrint) {
+    host.Write(toPrint);
   }
 
-  private void PrintError() {
-    Console.ForegroundColor = ConsoleColor.Red;
-    Console.WriteLine("ERROR!!!");
-    Console.ForegroundColor = ConsoleColor.White;
+  private void PrintError(IConsoleHost host) {
+    host.WriteError("ERROR!!!" + Environment.NewLine);
   }
 
-  private void PrintSuccess() {
-    Console.ForegroundColor = ConsoleColor.Green;
-    Console.WriteLine("SUCCESS");
-    Console.ForegroundColor = ConsoleColor.White;
+  private void PrintSuccess(IConsoleHost host) {
+    host.WriteLine("SUCCESS" + Environment.NewLine);
   }
 
 }

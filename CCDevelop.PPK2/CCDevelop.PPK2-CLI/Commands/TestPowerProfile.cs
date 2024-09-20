@@ -36,14 +36,28 @@ public class TestPowerProfile : IConsoleCommand {
   }
 
   public async Task<object?> RunAsync(CommandLineProcessor processor, IConsoleHost host) {
-    
+    // Allocate power profile
     _powerProfile2 = new PowerProfile();
+    
+    // Initialize power profile 
     if (!_powerProfile2.Init()) {
       Terminate();
       return Task.FromResult<object?>(false);
     }
 
+    // Start Measure 
+    if (_powerProfile2.StartMeasuring()) {
+      for (int tm = 0; tm < 100; tm++) {
+        host.WriteLine($"{tm} -> Time: {(_powerProfile2.GetRunningTime_mS() / 1000):0.0000} s - Samples: {_powerProfile2.GetNumMeasurements()}");
+        Thread.Sleep(1000);
+      }
+
+      _powerProfile2.StopMeasuring();
+    }
+    
+    // Terminate power profile
     Terminate();
+    
     return Task.FromResult<object?>(null);
   }
 

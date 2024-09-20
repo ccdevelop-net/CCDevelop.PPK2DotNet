@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/CCDevelop.CommandParser" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/CCDevelop.PPK2NET" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/CCDevelop.SerialPort" vcs="Git" />
   </component>
 </project>
