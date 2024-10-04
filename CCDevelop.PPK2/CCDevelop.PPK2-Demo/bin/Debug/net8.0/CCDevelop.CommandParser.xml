@@ -1,0 +1,596 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CCDevelop.CommandParser</name>
+    </assembly>
+    <members>
+        <member name="T:CCDevelop.CommandParser.Attributes.ArgumentAttribute">
+            <summary>
+            Attribute to define a command line argument.
+            </summary>
+        </member>
+        <member name="P:CCDevelop.CommandParser.Attributes.ArgumentAttribute.Name">
+            <summary>
+            Gets or sets the argument name
+            </summary>
+        </member>
+        <member name="P:CCDevelop.CommandParser.Attributes.ArgumentAttribute.Description">
+            <summary>
+            Gets or sets the argument description
+            </summary>
+        </member>
+        <member name="P:CCDevelop.CommandParser.Attributes.ArgumentAttribute.Position">
+            <summary>
+            Gets or sets the position of the unnamed argument
+            </summary>
+        </member>
+        <member name="P:CCDevelop.CommandParser.Attributes.ArgumentAttribute.IsRequired">
+            <summary>
+            Gets or sets a value indicating whether the argument is required (default: true)
+            </summary>
+        </member>
+        <member name="P:CCDevelop.CommandParser.Attributes.ArgumentAttribute.AcceptsCommandInput">
+            <summary>
+            Gets or sets a value indicating whether the argument accepts an input from a previous command (default: false)
+            </summary>
+        </member>
+        <member name="P:CCDevelop.CommandParser.Attributes.ArgumentAttribute.ShowPrompt">
+            <summary>
+            Gets or sets a value indicating whether to prompt the user for the value
+            </summary>
+        </member>
+        <member name="M:CCDevelop.CommandParser.Attributes.ArgumentAttribute.GetValue(CCDevelop.CommandParser.Interfaces.ITerminalHost,System.String[],System.Reflection.PropertyInfo,CCDevelop.CommandParser.Interfaces.ITerminalCommand,System.Object,System.String@)">
+            <summary>
+            Gets the argument value
+            </summary>
+            <param name="terminalHost">The command line host.</param>
+            <param name="args">The arguments.</param>
+            <param name="property">The property.</param>
+            <param name="command">The command.</param>
+            <param name="input">The output from the previous command in the chain.</param>
+            <param name="used">Indicates whether a value for the property was found in the given arguments.</param>
+            <returns>The value.</returns>
+            <exception cref="T:System.InvalidOperationException">Either the argument Name or Position can be set, but not both.</exception>
+            <exception cref="T:System.InvalidOperationException">Either the argument Name or Position can be set, but not both.</exception>
+            <exception cref="T:System.InvalidOperationException">The parameter has no default value.</exception>
+        </member>
+        <member name="T:CCDevelop.CommandParser.Attributes.ArgumentAttributeBase">
+            <summary>
+            The argument attribute base class
+            </summary>
+        </member>
+        <member name="M:CCDevelop.CommandParser.Attributes.ArgumentAttributeBase.GetValue(CCDevelop.CommandParser.Interfaces.ITerminalHost,System.String[],System.Reflection.PropertyInfo,CCDevelop.CommandParser.Interfaces.ITerminalCommand,System.Object,System.String@)">
+            <summary>
+            Gets the argument value
+            </summary>
+            <param name="terminalHost">The command line host.</param>
+            <param name="args">The arguments.</param>
+            <param name="property">The property.</param>
+            <param name="command"></param>
+            <param name="input">The output from the previous command in the chain.</param>
+            <param name="used"></param>
+            <returns>The value.</returns>
+        </member>
+        <member name="M:CCDevelop.CommandParser.Attributes.ArgumentAttributeBase.ConvertToType(System.String,System.Type)">
+            <summary>
+            Converts a string value to a specific type
+            </summary>
+            <param name="value">The value.</param>
+            <param name="type">The type.</param>
+            <returns>The value.</returns>
+        </member>
+        <member name="T:CCDevelop.CommandParser.Attributes.CommandAttribute">
+            <summary>
+            Attribute to define a command class
+            </summary>
+        </member>
+        <member name="M:CCDevelop.CommandParser.Attributes.CommandAttribute.#ctor(System.String,System.String)">
+            <summary>
+            Attribute of the command
+            </summary>
+            <param name="name">Name of the attribute</param>
+            <param name="description">Description of the command</param>
+        </member>
+        <member name="P:CCDevelop.CommandParser.Attributes.CommandAttribute.Name">
+            <summary>
+            Gets or sets the name
+            </summary>
+        </member>
+        <member name="P:CCDevelop.CommandParser.Attributes.CommandAttribute.Description">
+            <summary>
+            Gets or sets the description
+            </summary>
+        </member>
+        <member name="T:CCDevelop.CommandParser.CommandResult">
+            <summary>
+            A command result
+            </summary>
+        </member>
+        <member name="P:CCDevelop.CommandParser.CommandResult.Command">
+            <summary>
+            Gets or sets the command
+            </summary>
+        </member>
+        <member name="P:CCDevelop.CommandParser.CommandResult.Output">
+            <summary>
+            Gets or sets the command output
+            </summary>
+        </member>
+        <member name="T:CCDevelop.CommandParser.HelpCommand">
+            <summary>
+            The help command to show the availble list of commands.
+            </summary>
+        </member>
+        <member name="P:CCDevelop.CommandParser.HelpCommand.Command">
+            <summary>
+            Gets the command to print infos for (by default not set => prints all commands)
+            </summary>
+        </member>
+        <member name="P:CCDevelop.CommandParser.HelpCommand.Usage">
+            <summary>
+            Usage line of help command.
+            </summary>
+        </member>
+        <member name="M:CCDevelop.CommandParser.HelpCommand.RunAsync(CCDevelop.CommandParser.TerminalLineProcessor,CCDevelop.CommandParser.Interfaces.ITerminalHost)">
+            <summary>
+            Runs the command
+            </summary>
+            <param name="processor">Processor of the command line.</param>
+            <param name="host">Host terminal to use.</param>
+            <returns>The input object for the next command.</returns>
+        </member>
+        <member name="T:CCDevelop.CommandParser.Interfaces.IDependencyResolver">
+            <summary>
+            Interface to resolve a dependency.
+            </summary>
+        </member>
+        <member name="M:CCDevelop.CommandParser.Interfaces.IDependencyResolver.GetService(System.Type)">
+            <summary>
+            Resolves the service of the given type
+            </summary>
+            <param name="serviceType">Type of the service</param>
+            <returns>Return service</returns>
+        </member>
+        <member name="T:CCDevelop.CommandParser.Interfaces.ITerminalCommand">
+            <summary>
+            Interface for terminal line command
+            </summary>
+        </member>
+        <member name="M:CCDevelop.CommandParser.Interfaces.ITerminalCommand.RunAsync(CCDevelop.CommandParser.TerminalLineProcessor,CCDevelop.CommandParser.Interfaces.ITerminalHost)">
+            <summary>
+            Runs the command in async mode
+            </summary>
+            <param name="processor">Processor line object.</param>
+            <param name="host">Host where output data.</param>
+            <returns>Result of the command</returns>
+        </member>
+        <member name="T:CCDevelop.CommandParser.Interfaces.ForegroundColor">
+            <summary>
+            Class that define colors for foreground of the text on terminal
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.ForegroundColor.Black">
+            <summary>
+            Black color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.ForegroundColor.DarkBlue">
+            <summary>
+            Bark blue color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.ForegroundColor.DarkGreen">
+            <summary>
+            Dark green color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.ForegroundColor.DarkRed">
+            <summary>
+            Dark red color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.ForegroundColor.DarkMagenta">
+            <summary>
+            Dark magenta color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.ForegroundColor.DarkYellow">
+            <summary>
+            Dark yellow color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.ForegroundColor.DarkGray">
+            <summary>
+            Dark gray color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.ForegroundColor.Gray">
+            <summary>
+            Gray color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.ForegroundColor.Blue">
+            <summary>
+            Blue color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.ForegroundColor.Green">
+            <summary>
+            Green color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.ForegroundColor.Cyan">
+            <summary>
+            Cyan color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.ForegroundColor.Red">
+            <summary>
+            Red color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.ForegroundColor.Magenta">
+            <summary>
+            Magenta color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.ForegroundColor.Yellow">
+            <summary>
+            Yellow color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.ForegroundColor.White">
+            <summary>
+            White color
+            </summary>
+        </member>
+        <member name="T:CCDevelop.CommandParser.Interfaces.BackgroundColor">
+            <summary>
+            Class that define colors for background of the text on terminal
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.BackgroundColor.Black">
+            <summary>
+            Black color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.BackgroundColor.DarkBlue">
+            <summary>
+            Bark blue color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.BackgroundColor.DarkGreen">
+            <summary>
+            Dark green color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.BackgroundColor.DarkRed">
+            <summary>
+            Dark red color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.BackgroundColor.DarkMagenta">
+            <summary>
+            Dark magenta color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.BackgroundColor.DarkYellow">
+            <summary>
+            Dark yellow color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.BackgroundColor.DarkGray">
+            <summary>
+            Dark gray color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.BackgroundColor.Gray">
+            <summary>
+            Gray color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.BackgroundColor.Blue">
+            <summary>
+            Blue color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.BackgroundColor.Green">
+            <summary>
+            Green color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.BackgroundColor.Cyan">
+            <summary>
+            Cyan color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.BackgroundColor.Red">
+            <summary>
+            Red color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.BackgroundColor.Magenta">
+            <summary>
+            Magenta color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.BackgroundColor.Yellow">
+            <summary>
+            Yellow color
+            </summary>
+        </member>
+        <member name="F:CCDevelop.CommandParser.Interfaces.BackgroundColor.White">
+            <summary>
+            White color
+            </summary>
+        </member>
+        <member name="T:CCDevelop.CommandParser.Interfaces.ITerminalHost">
+            <summary>
+            Interface of the command line
+            </summary>
+        </member>
+        <member name="M:CCDevelop.CommandParser.Interfaces.ITerminalHost.Write(System.String,System.String,System.String)">
+            <summary>
+            Writes a message to the terminal
+            </summary>
+            <param name="message">Message to write on terminal.</param>
+            <param name="foregroundColor">Foreground color of the message <see cref="T:CCDevelop.CommandParser.Interfaces.ForegroundColor"/></param>
+            <param name="backgroundColor">Background color of the message <see cref="T:CCDevelop.CommandParser.Interfaces.BackgroundColor"/></param>
+        </member>
+        <member name="M:CCDevelop.CommandParser.Interfaces.ITerminalHost.WriteLine(System.String,System.String,System.String)">
+            <summary>
+            Writes a line to the terminal
+            </summary>
+            <param name="line">Line to write on terminal.</param>
+            <param name="foregroundColor">Foreground color of the message <see cref="T:CCDevelop.CommandParser.Interfaces.ForegroundColor"/></param>
+            <param name="backgroundColor">Background color of the message <see cref="T:CCDevelop.CommandParser.Interfaces.BackgroundColor"/></param>
+        </member>
+        <member name="M:CCDevelop.CommandParser.Interfaces.ITerminalHost.WriteError(System.String)">
+            <summary>
+            Writes an error message to the terminal
+            </summary>
+            <param name="message">Error message to write on terminal.</param>
+        </member>
+        <member name="M:CCDevelop.CommandParser.Interfaces.ITerminalHost.WriteWarning(System.String)">
+            <summary>
+            Writes an warning message to the terminal
+            </summary>
+            <param name="message">Warming message to write on terminal.</param>
+        </member>
+        <member name="M:CCDevelop.CommandParser.Interfaces.ITerminalHost.WriteInfo(System.String)">
+            <summary>
+            Writes an information message
+            </summary>
+            <param name="message">Information message to write on terminal.</param>
+        </member>
+        <member name="M:CCDevelop.CommandParser.Interfaces.ITerminalHost.ReadLine(System.String)">
+            <summary>
+            Reads a value from the console
+            </summary>
+            <param name="message">Prompt message to print on terminal.</param>
+            <returns>Return value from terminal.</returns>
+        </member>
+        <member name="P:CCDevelop.CommandParser.Interfaces.ITerminalHost.InteractiveMode">
+            <summary>
+            Gets or sets a value indicating whether interactive mode is enabled (i.e. ReadLine() is allowed)
+            </summary>
+        </member>
+        <member name="T:CCDevelop.CommandParser.SwitchAttribute">
+            <summary>
+            Attribute to define a switch/boolean attribute.
+            </summary>
+        </member>
+        <member name="M:CCDevelop.CommandParser.SwitchAttribute.#ctor(System.String,System.String)">
+            <summary>
+            Command switch attribute
+            </summary>
+            <param name="shortName">Short name of the attribute</param>
+            <param name="longName">Long name of the attribute</param>
+        </member>
+        <member name="P:CCDevelop.CommandParser.SwitchAttribute.ShortName">
+            <summary>
+            Gets or sets the short name without the '-' prefix
+            </summary>
+        </member>
+        <member name="P:CCDevelop.CommandParser.SwitchAttribute.LongName">
+            <summary>
+            Gets or sets the long name without the '--' prefix
+            </summary>
+        </member>
+        <member name="M:CCDevelop.CommandParser.SwitchAttribute.GetValue(CCDevelop.CommandParser.Interfaces.ITerminalHost,System.String[],System.Reflection.PropertyInfo,CCDevelop.CommandParser.Interfaces.ITerminalCommand,System.Object,System.String@)">
+            <summary>Gets the argument value.</summary>
+            <param name="terminalHost">The command line host.</param>
+            <param name="args">The arguments.</param>
+            <param name="property">The property.</param>
+            <param name="command">The command.</param>
+            <param name="input">The output from the previous command in the chain.</param>
+            <param name="used">Output validated argument.</param>
+            <returns>The value.</returns>
+        </member>
+        <member name="T:CCDevelop.CommandParser.TerminalHost">
+            <summary>.
+            A command line host implementation which uses System.Console
+            </summary>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalHost.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CCDevelop.CommandParser.TerminalHost"/> class
+            </summary>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalHost.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CCDevelop.CommandParser.TerminalHost"/> class.
+            </summary>
+            <param name="interactiveMode">Specifies whether interactive mode is enabled.</param>
+        </member>
+        <member name="P:CCDevelop.CommandParser.TerminalHost.InteractiveMode">
+            <summary>
+            Gets or sets a value indicating whether interactive mode is enabled (i.e. ReadValue() is allowed)
+            </summary>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalHost.Write(System.String,System.String,System.String)">
+            <summary>
+            Write on the terminal
+            </summary>
+            <param name="message">Message to write on terminal</param>
+            <param name="foregroundColor">Foreground color of the message <see cref="T:CCDevelop.CommandParser.Interfaces.ForegroundColor"/></param>
+            <param name="backgroundColor">Background color of the message <see cref="T:CCDevelop.CommandParser.Interfaces.BackgroundColor"/></param>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalHost.WriteLine(System.String,System.String,System.String)">
+            <summary>
+            Write a line on the console
+            </summary>
+            <param name="line">Line to write</param>
+            <param name="foregroundColor">Foreground color of the message <see cref="T:CCDevelop.CommandParser.Interfaces.ForegroundColor"/></param>
+            <param name="backgroundColor">Background color of the message <see cref="T:CCDevelop.CommandParser.Interfaces.BackgroundColor"/></param>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalHost.WriteError(System.String)">
+            <summary>
+            Writes an error message to the console
+            </summary>
+            <param name="message">The message to write</param>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalHost.WriteWarning(System.String)">
+            <summary>
+            Writes an warning message to the console
+            </summary>
+            <param name="message">The message to write</param>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalHost.WriteInfo(System.String)">
+            <summary>
+            Writes an information message to the console
+            </summary>
+            <param name="message">The message to write</param>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalHost.ReadLine(System.String)">
+            <summary>
+            Reads a value from the console
+            </summary>
+            <param name="message">The message.</param>
+            <returns>The value.</returns>
+            <exception cref="T:System.InvalidOperationException">Cannot read value from command line because interactive mode is disabled.</exception>
+        </member>
+        <member name="T:CCDevelop.CommandParser.UnusedArgumentException">
+            <summary>
+            An provided argument is not used.
+            </summary>
+        </member>
+        <member name="T:CCDevelop.CommandParser.TerminalLineProcessor">
+            <summary>
+            A command base command line processor.
+            </summary>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalLineProcessor.#ctor(CCDevelop.CommandParser.Interfaces.ITerminalHost,CCDevelop.CommandParser.Interfaces.IDependencyResolver,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CCDevelop.CommandParser.TerminalLineProcessor" /> class
+            </summary>
+            <param name="terminalHost">The command line host.</param>
+            <param name="dependencyResolver">The dependency resolver.</param>
+            <param name="registerDefaultHelpCommand">Register like default help command</param>
+        </member>
+        <member name="P:CCDevelop.CommandParser.TerminalLineProcessor.Commands">
+            <summary>
+            Gets the list of registered commands.
+            </summary>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalLineProcessor.RegisterCommand``1(System.String)">
+            <summary>
+            Adds a command
+            </summary>
+            <typeparam name="TCommandLineCommand">The type of the command.</typeparam>
+            <param name="name">The name of the command.</param>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalLineProcessor.RegisterCommand``1">
+            <summary>
+            Adds a command
+            </summary>
+            <typeparam name="TCommandLineCommand">The type of the command.</typeparam>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalLineProcessor.RegisterCommandsFromAssembly(System.Reflection.Assembly)">
+            <summary>
+            Loads all commands from an assembly (command classes must have the CommandAttribute with a defined Name)
+            </summary>
+            <param name="assembly">The assembly.</param>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalLineProcessor.RegisterCommand(System.Type)">
+            <summary>
+            Adds a command
+            </summary>
+            <param name="commandType">Type of the command.</param>
+            <exception cref="T:System.InvalidOperationException">The command has already been added.</exception>
+            <exception cref="T:System.InvalidOperationException">The command class is missing the CommandAttribute attribute.</exception>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalLineProcessor.RegisterCommand(System.String,System.Type)">
+            <summary>
+            Adds a command
+            </summary>
+            <param name="name">The name of the command.</param>
+            <param name="commandType">Type of the command.</param>
+            <exception cref="T:System.InvalidOperationException">The command has already been added.</exception>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalLineProcessor.Process(System.String[],System.Object)">
+            <summary>
+            Processes the command in the given command line arguments.
+            </summary>
+            <param name="args">The arguments.</param>
+            <param name="input">The output from the previous command.</param>
+            <returns>The exeucuted command.</returns>
+            <exception cref="T:System.InvalidOperationException">The command could not be found.</exception>
+            <exception cref="T:System.InvalidOperationException">No dependency resolver available to create a command without default constructor.</exception>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalLineProcessor.ProcessWithExceptionHandling(System.String[],System.Object)">
+            <summary>
+            Processes the command in the given command line arguments.
+            </summary>
+            <param name="args">The arguments.</param>
+            <param name="input">The output from the previous command.</param>
+            <returns>The exeucuted command.</returns>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalLineProcessor.ProcessAsync(System.String[],System.Object)">
+            <summary>
+            Processes the command in the given command line arguments
+            </summary>
+            <param name="args">The arguments.</param>
+            <param name="input">The input for the first command.</param>
+            <returns>The executed command.</returns>
+            <exception cref="T:System.InvalidOperationException">The command could not be found.</exception>
+            <exception cref="T:System.InvalidOperationException">No dependency resolver available to create a command without default constructor.</exception>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalLineProcessor.ProcessSingleAsync(System.String[],System.Object)">
+            <summary>
+            Processes the command in the given command line arguments
+            </summary>
+            <param name="args">The arguments.</param>
+            <param name="input">The input for the command.</param>
+            <returns>The executed command.</returns>
+            <exception cref="T:System.InvalidOperationException">The command could not be found.</exception>
+            <exception cref="T:System.InvalidOperationException">No dependency resolver available to create a command without default constructor.</exception>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalLineProcessor.TryLookupCommandType(System.String)">
+            <summary>
+            Search for command type matching a command name.
+            </summary>
+            <param name="commandName">Name of the command to search for.</param>
+            <returns>The matching command, otherwise NULL.</returns>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalLineProcessor.ReadCommandNameInteractive">
+            <summary>
+            Read the command name using console host if it was not provided by call.
+            </summary>
+            <returns>Command name input by user</returns>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalLineProcessor.CreateCommand(System.Type)">
+            <exception cref="T:System.InvalidOperationException">
+            No dependency resolver available to create a command without default constructor.
+            </exception>
+        </member>
+        <member name="M:CCDevelop.CommandParser.TerminalLineProcessor.GetCommandNameAndArguments(System.String[],System.String@,System.Collections.Generic.IEnumerable{System.String}@)">
+            <summary>
+            Gets the name of the command to execute
+            </summary>
+            <param name="args">The arguments.</param>
+            <param name="commandName">Name of the command</param>
+            <param name="commandArguments"></param>
+        </member>
+    </members>
+</doc>

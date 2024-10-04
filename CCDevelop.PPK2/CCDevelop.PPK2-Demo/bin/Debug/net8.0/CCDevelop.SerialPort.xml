@@ -1,0 +1,583 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CCDevelop.SerialPort</name>
+    </assembly>
+    <members>
+        <member name="T:CCDevelop.SerialPort.Abstractions.Enums.Handshake">
+            <summary>
+            Serial handshake
+            </summary>
+        </member>
+        <member name="F:CCDevelop.SerialPort.Abstractions.Enums.Handshake.None">
+            <summary>
+            No handhake
+            </summary>
+        </member>
+        <member name="F:CCDevelop.SerialPort.Abstractions.Enums.Handshake.XOnXOff">
+            <summary>
+            XOn and XOff handshake
+            </summary>
+        </member>
+        <member name="F:CCDevelop.SerialPort.Abstractions.Enums.Handshake.RequestToSend">
+            <summary>
+            Requanst to Send handshake
+            </summary>
+        </member>
+        <member name="F:CCDevelop.SerialPort.Abstractions.Enums.Handshake.RequestToSendXOnXOff">
+            <summary>
+            Requanst to Send nad XOn/XOff handshake
+            </summary>
+        </member>
+        <member name="T:CCDevelop.SerialPort.Abstractions.Enums.Parity">
+            <summary>
+            Serial parity mode
+            </summary>
+        </member>
+        <member name="F:CCDevelop.SerialPort.Abstractions.Enums.Parity.None">
+            <summary>
+            No parity
+            </summary>
+        </member>
+        <member name="F:CCDevelop.SerialPort.Abstractions.Enums.Parity.Odd">
+            <summary>
+            Parity odd
+            </summary>
+        </member>
+        <member name="F:CCDevelop.SerialPort.Abstractions.Enums.Parity.Even">
+            <summary>
+            Parity even
+            </summary>
+        </member>
+        <member name="F:CCDevelop.SerialPort.Abstractions.Enums.Parity.Mark">
+            <summary>
+            Parity mark
+            </summary>
+        </member>
+        <member name="F:CCDevelop.SerialPort.Abstractions.Enums.Parity.Space">
+            <summary>
+            Parity space
+            </summary>
+        </member>
+        <member name="T:CCDevelop.SerialPort.Abstractions.Enums.StopBits">
+            <summary>
+            Serial stop bits
+            </summary>
+        </member>
+        <member name="F:CCDevelop.SerialPort.Abstractions.Enums.StopBits.None">
+            <summary>
+            No stop bit
+            </summary>
+        </member>
+        <member name="F:CCDevelop.SerialPort.Abstractions.Enums.StopBits.One">
+            <summary>
+            One stop bit
+            </summary>
+        </member>
+        <member name="F:CCDevelop.SerialPort.Abstractions.Enums.StopBits.Two">
+            <summary>
+            Two stop bits
+            </summary>
+        </member>
+        <member name="F:CCDevelop.SerialPort.Abstractions.Enums.StopBits.OnePointFive">
+            <summary>
+            One and half stop bit
+            </summary>
+        </member>
+        <member name="T:CCDevelop.SerialPort.Abstractions.ISerialPort">
+            <summary>
+            Interface for a serial port
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Abstractions.ISerialPort.BaseStream">
+            <summary>
+            Base stream of the serial <see cref="T:System.IO.Stream"/>
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Abstractions.ISerialPort.BaudRate">
+            <summary>
+            Baudrate of the serial
+            Values:
+            </summary>
+            <list type="bullet">
+              <listheader>
+                <term>
+                  Baudrates
+                </term>
+              </listheader>
+              <item>
+                4800
+              </item>
+              <item>
+                9600
+              </item>
+              <item>
+                19200
+              </item>
+              <item>
+                38400
+              </item>
+              <item>
+                57600
+              </item>
+              <item>
+                115200
+              </item>
+              <item>
+                230400
+              </item>
+              <item>
+                460800
+              </item>
+              <item>
+                921600
+              </item>
+            </list>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Abstractions.ISerialPort.DataBits">
+            <summary>
+            Serial data bits
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Abstractions.ISerialPort.Handshake">
+            <summary>
+            Serial handshake type <see cref="T:CCDevelop.SerialPort.Abstractions.Enums.Handshake"/>
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Abstractions.ISerialPort.IsOpen">
+            <summary>
+            Check is serial is opened
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Abstractions.ISerialPort.Parity">
+            <summary>
+            Serial parity type <see cref="T:CCDevelop.SerialPort.Abstractions.Enums.Parity"/>
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Abstractions.ISerialPort.PortName">
+            <summary>
+            Serial port name
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Abstractions.ISerialPort.ReadTimeout">
+            <summary>
+            Serial reading timeout in milliseconds
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Abstractions.ISerialPort.StopBits">
+            <summary>
+            Serial stop bits type <see cref="T:CCDevelop.SerialPort.Abstractions.Enums.StopBits"/>
+            </summary>    
+        </member>
+        <member name="M:CCDevelop.SerialPort.Abstractions.ISerialPort.Open">
+            <summary>
+            Open serial port
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Abstractions.ISerialPort.Close">
+            <summary>
+            Close serial port
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Abstractions.ISerialPort.ToString">
+            <summary>
+            Read serial object
+            </summary>
+            <returns>Return serial object</returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Abstractions.ISerialPort.DiscardInBuffer">
+            <summary>
+            Discard data in received buffer
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Abstractions.ISerialPort.DiscardInBufferAsync(System.Threading.CancellationToken)">
+            <summary>
+            Discard data in received buffer
+            </summary>
+            <returns>Returns task that execute operation</returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Abstractions.ISerialPort.DiscardOutBuffer">
+            <summary>
+            Discard data in transmit buffer
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Abstractions.ISerialPort.DiscardOutBufferAsync(System.Threading.CancellationToken)">
+            <summary>
+            Discard data in transmit buffer, in asyncronus mode
+            </summary>
+            <returns>Returns task that execute operation</returns>
+        </member>
+        <member name="F:CCDevelop.SerialPort.Linux.Helpers.SttyExecution.SttyPath">
+            <summary>
+            The path to the stty executable
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.Helpers.SttyExecution.IsPlatformCompatible">
+            <summary>
+            Checks if the stty executable is present on the system.
+            </summary>
+            <returns>Return true if platform is compatible </returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.Helpers.SttyExecution.SetTtyWithParam(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Calls stty with the list of stty arguments
+            </summary>
+            <param name="arguments"></param>
+            <returns>Result string</returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.Helpers.SttyExecution.CallStty(System.String)">
+            <summary>
+            Calls the stty command with the parameters given.
+            </summary>
+            <param name="sttyParams"></param>
+            <returns>Output string</returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.Helpers.SttyParameters.GetListAllTtyParam">
+            <summary>
+            Get list all TTY terminal
+            </summary>
+            <returns>Return list of terminal</returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.Helpers.SttyParameters.GetPortTtyParam(System.String)">
+            <summary>
+            Get terminal TTY parameter of a specific port
+            </summary>
+            <param name="port">Requaired port</param>
+            <returns>List of parameter</returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.Helpers.SttyParameters.GetSaneModeTtyParam">
+            <summary>
+            Get sane TTY parameter
+            </summary>
+            <returns>List of sane parameter</returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.Helpers.SttyParameters.GetRawModeTtyParam(System.Boolean)">
+            <summary>
+            Get list of raw parameter
+            </summary>
+            <param name="rawEnabled">Flag of raw enabled</param>
+            <returns>List of raw parameter</returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.Helpers.SttyParameters.GetDrainTtyParam(System.Boolean)">
+            <summary>
+            Enable or disable Drain parameters
+            </summary>
+            <param name="drainEnabled">Flag of drain enabled</param>
+            <returns>Return list string of the values</returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.Helpers.SttyParameters.GetBaudTtyParam(System.Int32)">
+            <summary>
+            Retrive baudrate string
+            </summary>
+            <param name="baudRate">Baud to be retrived</param>
+            <returns>Return list string of the values</returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.Helpers.SttyParameters.GetReadTimeoutTtyParam(System.Int32)">
+            <summary>
+            Timeout on each read. Time is in tenths of a second, 1 = 100ms
+            </summary>
+            <param name="readTimeout">Read timeout</param>
+            <returns>Return list string of the values</returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.Helpers.SttyParameters.GetMinDataTtyParam(System.Int32)">
+            <summary>
+            Minimum bytes that can be read out of the stream
+            </summary>
+            <param name="byteCount">Number of byte</param>
+            <returns>Return list string of the values</returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.Helpers.SttyParameters.GetHandshakeTtyParams(CCDevelop.SerialPort.Abstractions.Enums.Handshake)">
+            <summary>
+            Translate handshake mode
+            </summary>
+            <param name="handshake">Handshake mode to translate</param>
+            <returns>Return list string of the values</returns>
+            <exception cref="T:System.InvalidOperationException">Parameter provided is invalid</exception>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.Helpers.SttyParameters.GetParityTtyParams(CCDevelop.SerialPort.Abstractions.Enums.Parity)">
+            <summary>
+            Get parity translation
+            </summary>
+            <param name="parity" ><see cref="T:CCDevelop.SerialPort.Abstractions.Enums.Parity"/>Parity to translate</param>
+            <returns>Return list string of the values</returns>
+            <exception cref="T:System.InvalidOperationException">Parameter provided is invalid</exception>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.Helpers.SttyParameters.GetDataBitsTtyParam(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="dataBits">Databits to translate</param>
+            <returns>Return list string of the values</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Provided parameter is out of range</exception>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.Helpers.SttyParameters.GetStopBitsTtyParam(CCDevelop.SerialPort.Abstractions.Enums.StopBits)">
+            <summary>
+            Retrive stopbits translation
+            </summary>
+            <param name="stopBits"><see cref="T:CCDevelop.SerialPort.Abstractions.Enums.StopBits"/>Stop bits to convert</param>
+            <returns>Return list string of the values</returns>
+            <exception cref="T:System.InvalidOperationException">Invalid provided parameters</exception>
+        </member>
+        <member name="T:CCDevelop.SerialPort.Linux.SerialPortInfo">
+            <summary>
+            Serial port information class
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Linux.SerialPortInfo.Name">
+            <summary>
+            Name of the serial
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Linux.SerialPortInfo.Description">
+            <summary>
+            Description of the serial
+            </summary>
+        </member>
+        <member name="T:CCDevelop.SerialPort.Linux.LinuxSerialPort">
+            <summary>
+            A serial port implementation for POSIX style systems that have /bin/stty available.
+            </summary>
+        </member>
+        <member name="F:CCDevelop.SerialPort.Linux.LinuxSerialPort.InfiniteTimeout">
+            <summary>
+            The value representing an infinite timout on the serial port.
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.LinuxSerialPort.#ctor(System.String)">
+            <summary>
+            Creates an instance of SerialPort for accessing a serial port on the system.
+            Enables the serial port in raw mode by default.
+            </summary>
+            <param name="port">The path of the serial port device, for example /dev/ttyUSB0.
+            Wildcards are accepted, for example /dev/ttyUSB* will open the first port that matches that path.
+            </param>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Linux.LinuxSerialPort.IsOpen">
+            <summary>
+            True if the serialport has been opened, and the stream is avialable for reading and writing.
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Linux.LinuxSerialPort.PortName">
+            <summary>
+            The path of the opened port.
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Linux.LinuxSerialPort.BaseStream">
+            <summary>
+            The stream for reading from and writing to the serial port.
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Linux.LinuxSerialPort.EnableRawMode">
+            <summary>
+            Disables as much of the kernel tty layer as possible,
+            to provide raw serialport like behaviour over the underlying tty.
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Linux.LinuxSerialPort.EnableDrain">
+            <summary>
+            Controls whether stty will attempt to flush the output buffer before applying serial configuration.
+            If the stty version installed supports the [-]drain option, it is recommended to set this to false
+            to avoid potential hangs when opening the serial port.
+            If stty does not support [-]drain, this should be set to null (default).
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Linux.LinuxSerialPort.MinimumBytesToRead">
+            <summary>
+            The minimum bytes that must fill the serial read buffer before the Read command
+            will return. (However, it may still time out and return less than this).
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Linux.LinuxSerialPort.ReadTimeout">
+            <summary>
+            The maximum amount of time a Read command will block for before returning.
+            The time is in milliseconds, but is rounded to tenths of a second when passed to stty.
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Linux.LinuxSerialPort.BaudRate">
+            <summary>
+            Gets or sets the baud rate of the serial port.
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Linux.LinuxSerialPort.DataBits">
+            <summary>
+            Gets or sets the databits to use for the serial port.
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Linux.LinuxSerialPort.StopBits">
+            <summary>
+            Gets or sets the stopbits to use for the serial port.
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Linux.LinuxSerialPort.Handshake">
+            <summary>
+            Gets or sets the handshake method to use for the serial port.
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Linux.LinuxSerialPort.Parity">
+            <summary>
+            Gets or sets the parity to use for the serial port.
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.LinuxSerialPort.Ports">
+            <summary>
+            Get serial port information - Static Function
+            </summary>
+            <returns>Return information of serial ports in the system</returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.LinuxSerialPort.Open">
+            <summary>
+            Opens the serial port.
+            If any of the serial port properties have been set, they will be applied
+            as stty commands to the serial port as it is opened.
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.LinuxSerialPort.Close">
+            <summary>
+            Closes the serial port.
+            The serial port may be re-opened, as long as it is not disposed.
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.LinuxSerialPort.Dispose">
+            <summary>
+            Disposes the serial port.
+            Once it has been disposed, it cannot be re-opened.
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.LinuxSerialPort.DiscardInBuffer">
+            <summary>
+            Discards the contents of the serial port read buffer.
+            Note, the current implementation only reads all bytes from the buffer, which is less than ideal.
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.LinuxSerialPort.DiscardInBufferAsync(System.Threading.CancellationToken)">
+            <summary>
+            Discards the contents of the serial port read buffer.
+            Note, the current implementation only reads all bytes from the buffer, which is less than ideal.
+            This will cause problems if MinimumBytesToRead is not set to 0.
+            </summary>
+            <param name="token">Cancel token</param>
+            <returns>Return the task reference</returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.LinuxSerialPort.DiscardOutBuffer">
+            <summary>
+            Discards the contents of the serial port write buffer.
+            Note, the current implementation only flushes the stream, which is less than ideal.
+            This will cause problems if hardware flow control is enabled.
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.LinuxSerialPort.DiscardOutBufferAsync(System.Threading.CancellationToken)">
+            <summary>
+            Discards the contents of the serial port write buffer.
+            Note, the current implementation only flushes the stream, which is less than ideal.
+            This will cause problems if hardware flow control is enabled.
+            </summary>
+            <param name="token">Cancel token</param>
+            <returns>Return the task reference</returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Linux.LinuxSerialPort.ToString">
+            <summary>
+            Get the serial port name
+            </summary>
+            <returns>Returns the name of the serial port</returns>
+        </member>
+        <member name="T:CCDevelop.SerialPort.Windows.WindowsSerialPort">
+            <summary>
+            Wrapper for System.IO.Ports.SerialPort to interface it to the ISerialPort interface
+            </summary>
+        </member>
+        <member name="F:CCDevelop.SerialPort.Windows.WindowsSerialPort.InfiniteTimeout">
+            <summary>
+            The value representing an infinite timout on the serial port.
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Windows.WindowsSerialPort.#ctor(System.IO.Ports.SerialPort)">
+            <summary>
+            Class that manage serial port for Windows systems
+            </summary>
+            <param name="serialPort">Serial port object <see cref="T:System.IO.Ports.SerialPort"/></param>
+            <exception cref="T:System.ArgumentNullException">Serial port not provided</exception>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Windows.WindowsSerialPort.BaseStream">
+            <summary>
+            Base stram of the serial <see cref="T:System.IO.Stream"/>
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Windows.WindowsSerialPort.BaudRate">
+            <summary>
+            Set and get serial baudrate 
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Windows.WindowsSerialPort.DataBits">
+            <summary>
+            Set and get data bits
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Windows.WindowsSerialPort.Handshake">
+            <summary>
+            Set and get serial handshake <see cref="T:CCDevelop.SerialPort.Abstractions.Enums.Handshake"/>
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Windows.WindowsSerialPort.IsOpen">
+            <summary>
+            Check if serial is open
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Windows.WindowsSerialPort.PortName">
+            <summary>
+            Get serial port name
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Windows.WindowsSerialPort.Parity">
+            <summary>
+            Get and set serial parity <see cref="T:CCDevelop.SerialPort.Abstractions.Enums.Parity"/>
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Windows.WindowsSerialPort.ReadTimeout">
+            <summary>
+            Serial read timeout
+            </summary>
+        </member>
+        <member name="P:CCDevelop.SerialPort.Windows.WindowsSerialPort.StopBits">
+            <summary>
+            Set and get serial stop bits <see cref="T:CCDevelop.SerialPort.Abstractions.Enums.StopBits"/>
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Windows.WindowsSerialPort.Close">
+            <summary>
+            Close serial port
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Windows.WindowsSerialPort.DiscardInBuffer">
+            <summary>
+            Discard data in received buffer
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Windows.WindowsSerialPort.DiscardInBufferAsync(System.Threading.CancellationToken)">
+            <summary>
+            Discard data in received buffer
+            </summary>
+            <returns>Returns task that execute operation</returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Windows.WindowsSerialPort.DiscardOutBuffer">
+            <summary>
+            Discard data in transmit buffer
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Windows.WindowsSerialPort.DiscardOutBufferAsync(System.Threading.CancellationToken)">
+            <summary>
+            Discard data in transmit buffer, in asyncronus mode
+            </summary>
+            <returns>Returns task that execute operation</returns>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Windows.WindowsSerialPort.Dispose">
+            <summary>
+            Dispose serial port
+            </summary>
+        </member>
+        <member name="M:CCDevelop.SerialPort.Windows.WindowsSerialPort.Open">
+            <summary>
+            Open serial port
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 using CCDevelop.CommandParser;
 using CCDevelop.PPK2CLI.Commands;
 
-namespace CCDevelop.PPK2CLI; // Note: actual namespace depends on the project name.
+namespace CCDevelop.PPK2Demo; // Note: actual namespace depends on the project name.
 
 internal class Program {
   
